@@ -149,13 +149,13 @@ export default function TourList() {
                 query += `&page=${page}`
 
             try {
-                let search = q.get("search");
-                if (search != null) {
-                  setFromGarage(search.split("to")[0]);
-                  // setToGarage(search.split("to")[1])
-                  setToGarage(search.split("to")[1].split("ngày")[0]);
-                  setSDate(search.split("to")[1].split("ngày")[1]);
-                }
+                // let search = q.get("search");
+                // if (search != null) {
+                //   setFromGarage(search.split("to")[0]);
+                //   // setToGarage(search.split("to")[1])
+                //   setToGarage(search.split("to")[1].split("ngày")[0]);
+                //   setSDate(search.split("to")[1].split("ngày")[1]);
+                // }
                 let res = await API.get(`${endpoints['router']}${query}`)
                 console.log(res.data)
 
@@ -234,7 +234,7 @@ export default function TourList() {
             </div>
         </>
         
-        results = <><h3>Hiển thị {routeList.length} trên {count} kết quả</h3></>
+        results = <><h3>Display {routeList.length} above {count} result</h3></>
    
 
     // Pagination
@@ -284,7 +284,7 @@ export default function TourList() {
                                 <div className="left-column pull-left">
                                     {results}
                                 </div>
-                                <div className="right-column pull-right clearfix">
+                                {/* <div className="right-column pull-right clearfix">
                                     <div className="short-box clearfix">
                                         <FormControl sx={{ m: 0, minWidth: 140 }}>
                                             <InputLabel id="select-sort-label">Sắp xếp theo</InputLabel>
@@ -315,7 +315,7 @@ export default function TourList() {
                                             <i className="fas fa-th-large" />
                                         </button>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                             <div className={cName}>
                                 {routes}
@@ -330,18 +330,18 @@ export default function TourList() {
                             <div className="default-sidebar tour-sidebar ml-20">
                                 <div className="sidebar-widget sidebar-search">
                                     <div className="widget-title">
-                                        <h3>Tìm kiếm</h3>
+                                        <h3>Search</h3>
                                     </div>
                                     <form onSubmit={search} className="search-form">
                                         <div className="form-group">
                                         <Form.Group>
-                                            <h4>Chọn điểm bắt đầu</h4>
+                                            <h4>Choose a starting point</h4>
                                             <Form.Select 
                                                 value={fromGarage}
                                                 onChange={(e) => setFromGarage(e.target.value)}
                                             >
                                                 <option value="0" selected="selected">
-                                                Chọn điểm bắt đầu
+                                                Choose a starting point
                                                 </option>
                                                 {city.map((c) => {
                                                 return <option value={c.name}>{c.name}</option>;
@@ -351,13 +351,13 @@ export default function TourList() {
                                         </div>
                                         <div className="form-group" >
                                         <Form.Group>
-                                            <h4>Chọn điểm đến</h4>
+                                            <h4>Choose a destination</h4>
                                             <Form.Select 
                                                 value={toGarage}
                                                 onChange={(e) => setToGarage(e.target.value)}
                                             >
                                                 <option value="0" selected="selected">
-                                                Chọn điểm đến
+                                                Choose a destination
                                                 </option>
 
                                                 {city.map((c) => {
@@ -370,7 +370,7 @@ export default function TourList() {
                                         <Box className="box_tim">
                                             <ThemeProvider theme={buttonTheme}>
                                                 <Button color="warning" variant="contained"  type="submit" startIcon={<SearchIcon />}>
-                                                        Tìm
+                                                        Search
                                                 </Button>
                                             </ThemeProvider>
                                         </Box>
@@ -544,13 +544,13 @@ function RouteItem2 (props) {
                             {/* {props.date}  */}
                             250 km
                             <span> 
-                                 | Còn: 
+                                 | Still: 
                                  {/* {props.route.slot}  */}
-                                 chỗ
+                                 seat
                             </span>
                         </p>
                         <div className="btn-box">
-                            <Link to={`/route-detail/${props.id}`}>Xem chi tiết</Link>
+                            <Link to={`/route-detail/${props.id}`}>See details</Link>
                         </div>
                     </div>
                 </div>

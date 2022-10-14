@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from "react-router-dom";
 import Api, { endpoints } from "../configs/Apis";
-// import "../static/Payment.css";
-import { memo } from "react";
+import { memo } from 'react'
 import Moment from "react-moment";
 import React from "react";
+import pageTitle5 from "../assets/img/istockphoto-485916538-1024x1024.jpg";
 function Payment(props) {
   const [seat, setSeat] = useState(props.seat);
   const [nameSeat, setNameSeat] = useState([]);
   const [nameGara, setNameGara] = useState([]);
   const [timeTable, setTimeTable] = useState([]);
   const navigate = useNavigate();
-  const { routerId } = useParams();
+
   useEffect(() => {
     let loadElement = async () => {
       let res = await Api.get(endpoints["garages-detail"](props.placeFrom));
@@ -52,55 +52,92 @@ function Payment(props) {
   const pay = async (customerID, name, phone, timeTable, nameGara) => {
     if (window.confirm("Bạn có chắc muốn thanh toán không?") == true) {
       let booking = await Api.post(endpoints["booking"], {
-        headers: "Access-Control-Allow-Origin: http://127.0.0.1:8000/route-detail/" + routerId + "/booking-3",
+        headers: "Access-Control-Allow-Origin: http://127.0.0.1:8000/",
         customerID: customerID,
         name: name,
         phone: phone,
         timeTable: timeTable,
       });
-
+  
       let res = await Api.get(endpoints["last-booking"]);
-
+  
       let id = res.data.id;
-
+  
       seat.map(async (c) => {
         let bookingdetails = await Api.post(endpoints["bookingdetails"], {
-          headers: "Access-Control-Allow-Origin: http://127.0.0.1:8000/route-detail/" + routerId + "/booking-3",
+          headers: "Access-Control-Allow-Origin: http://127.0.0.1:8000/",
           bookingID: id,
           from_garage: nameGara.id,
           seatID: c,
         });
       });
-
+  
       let bookinghistorys = await Api.post(endpoints["booking-history"], {
-        headers: "Access-Control-Allow-Origin: http://127.0.0.1:8000/route-detail/" + routerId + "/booking-3",
+        headers: "Access-Control-Allow-Origin: http://127.0.0.1:8000/",
         bookingID: id,
         statusID: 1,
       });
       console.log(bookinghistorys);
-      if (bookinghistorys.status === 201) {
+      if(bookinghistorys.status === 201){
         alert("Bạn đã thanh toán thành công!");
-        navigate("/route-detail/" + routerId + "/booking-3");
-      } else {
+        navigate("/route-detail/booking-3");
+      }else{
         alert("Rất tiếc! Thanh toán đã thất bại");
         navigate("/");
       }
+      
     } else {
       alert("Bạn đã huỷ thanh toán!");
       navigate("/");
     }
+
   };
 
   return (
+    <>
+    <section
+      className="page-title centred"
+      style={{ backgroundImage: `url(${pageTitle5})` }}
+    >
+      <div className="auto-container">
+        <div
+          className="content-box wow fadeInDown animated animated"
+          data-wow-delay="00ms"
+          data-wow-duration="1500ms"
+        >
+          <h1>Payment</h1>
+          <p>Explore your next great journey</p>
+        </div>
+      </div>
+    </section>
     <Container className="payment-container">
       <Row className="payment-row">
         <Col xs="12" className="payment-header">
           Thông tin mua vé
         </Col>
-        
         <Col xs="12" className="payment-title">
-          Thông tin chuyến: {props.station.stationFrom} ⇒{" "}
-          {props.station.stationTo}
+          Thông tin khách hàng
+        </Col>
+        <Col xs="2" className="payment-info">
+          Họ tên:
+        </Col>
+        <Col xs="4" className="payment-info">
+          {props.userInfo.name}
+        </Col>
+        <Col xs="2" className="payment-info">
+          Email:
+        </Col>
+        <Col xs="4" className="payment-info">
+          {props.userInfo.email}
+        </Col>
+        <Col xs="2" className="payment-info">
+          Số điện thoại:
+        </Col>
+        <Col xs="9" className="payment-info">
+          {props.userInfo.number}
+        </Col>
+        <Col xs="12" className="payment-title">
+          Thông tin chuyến: {props.station.stationFrom} ⇒ {props.station.stationTo}
         </Col>
         <Col xs="2" className="payment-info">
           Tuyến xe:
@@ -118,10 +155,7 @@ function Payment(props) {
           Thời gian:
         </Col>
         <Col xs="4" className="payment-info">
-          <span className="high-light">
-            {timeTable.time} ngày{" "}
-            <Moment format="DD/MM/YYYY">{timeTable.date}</Moment>
-          </span>
+          <span className="high-light">{timeTable.time} ngày <Moment  format="DD/MM/YYYY">{timeTable.date}</Moment></span>
         </Col>
         <Col xs="2" className="payment-info">
           Số ghế:
@@ -135,7 +169,7 @@ function Payment(props) {
           Điểm lên xe:
         </Col>
         <Col xs="4" className="payment-info">
-          <span className="high-light">{nameGara.name}</span>
+        <span className="high-light">{nameGara.name}</span>
         </Col>
         <Col xs="4" className="payment-info">
           {props.id}
@@ -191,6 +225,7 @@ function Payment(props) {
         </div>
       </div>
     </Container>
+    </>
   );
 }
 export default memo(Payment);

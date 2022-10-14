@@ -169,7 +169,7 @@ function AboutVideoSection() {
             data-wow-duration="1500ms"
           >
             <Link
-              to="https://www.youtube.com/watch?v=uMJs-a-d2ug"
+              to="https://www.youtube.com/watch?v=YncYl8rREqQ&ab_channel=KOYMusicGroup"
               className="lightbox-image"
               data-caption
             >

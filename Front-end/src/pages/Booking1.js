@@ -62,7 +62,7 @@ export default function Booking1(props) {
 
   return (
     <>
-      <section
+      {/* <section
         className="page-title centred"
         style={{ backgroundImage: `url(${pageTitle5})` }}
       >
@@ -76,7 +76,7 @@ export default function Booking1(props) {
             <p>Explore your next great journey</p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="booking-section booking-process-1">
         <div className="auto-container">

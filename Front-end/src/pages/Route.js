@@ -1,21 +1,18 @@
 import { Container } from "react-bootstrap";
-import Info from "../components/InfoLam";
 // import "../static/Router.css";
 import { useEffect, useState } from "react";
-import Payment from "../components/PaymentLam";
 import Api, { endpoints } from "../configs/Apis";
 import { useSearchParams, useParams } from "react-router-dom";
-import Item from "../components/ItemLam";
+import Item from "../components/Item";
 import Moment from "react-moment";
-import React from 'react';
-import Booking1 from './Booking1';
-import Booking2 from './Booking2';
+import React from "react";
+import Booking1 from "./Booking1";
+import Booking2 from "./Booking2";
 import { Link } from "react-router-dom";
 import advice1 from "../assets/img/14926f75f7d51ac044ccc0847cfb262f.png";
 import MessageSnackbar from "../components/MessageSnackbar";
 import Header from "../components/Header";
 function Router() {
-  
   // State of message
   const [open, setOpen] = React.useState(false);
   const [msg, setMsg] = useState("");
@@ -218,7 +215,7 @@ function Router() {
     element = elementFromGarage;
   }
 
-  const sortByTypeBus = element.filter(function (c) {
+  const sortByTypeBus = element.filter(function(c) {
     if (typeBusState === "0" || typeBusState === undefined) {
       return c;
     } else {
@@ -226,7 +223,7 @@ function Router() {
     }
   });
 
-  const sorted = sortByTypeBus.filter(function (c) {
+  const sorted = sortByTypeBus.filter(function(c) {
     if (timeState === undefined || timeState === "-1") {
       return c;
     } else {
@@ -253,8 +250,8 @@ function Router() {
 
   return (
     <>
-    <Header />
-    <section
+      <Header />
+      <section
         className="page-title style-three"
         style={{ backgroundImage: `url(${advice1})` }}
       >
@@ -286,78 +283,83 @@ function Router() {
         </div>
       </section>
 
-
-        <section className="tour-details">
+      <section className="tour-details">
         <div className="auto-container">
           <div className="row clearfix">
             <div className="col-lg-8 col-md-12 col-sm-12 content-side">
               <div className="tour-details-content">
-        {step === 1 ? (
-          <div>
-            {sortByType.length > 0 ? (
-              sortByType.map((c) => {
-                return (
-                  <Item
-                    setChoosen={setChoosenState}
-                    choosen={choosen}
-                    timeTableID={setTimeTableIDState}
-                    check={setChecked}
-                    seatSubmit={setSeatSubmit}
-                    placeFrom={setPlaceFromState}
+                {step === 1 ? (
+                  <div>
+                    {sortByType.length > 0 ? (
+                      sortByType.map((c) => {
+                        return (
+                          <Item
+                            setChoosen={setChoosenState}
+                            choosen={choosen}
+                            timeTableID={setTimeTableIDState}
+                            check={setChecked}
+                            seatSubmit={setSeatSubmit}
+                            placeFrom={setPlaceFromState}
+                            step={setStepState}
+                            total={setTotalState}
+                            station={setStationState}
+                            select={check === c.id ? true : false}
+                            id={c.id}
+                            rate={c.rate}
+                            busRouteID={c.busRouteID.id}
+                            timeStart={
+                              c.time.split(":")[0] + "h:" + c.time.split(":")[1]
+                            }
+                            timeEnd={
+                              parseInt(c.time.split(":")[0]) +
+                              6 +
+                              "h:" +
+                              c.time.split(":")[1]
+                            }
+                            price={c.busRouteID.price}
+                            busType={c.busRouteID.busID.typeBusID.name}
+                            busTypeId={c.busRouteID.busID.typeBusID.id}
+                            seat={c.seat}
+                            stationFrom={c.busRouteID.routeID.city_from.name}
+                            stationTo={c.busRouteID.routeID.to_garage.name}
+                            date={c.date}
+                          ></Item>
+                        );
+                      })
+                    ) : (
+                      <h1
+                        style={{
+                          textAlign: "center",
+                          margin: "0",
+                          padding: "10px",
+                        }}
+                      >
+                        No rides!!!
+                      </h1>
+                    )}
+                  </div>
+                ) : step === 2 ? (
+                  <Booking1
                     step={setStepState}
-                    total={setTotalState}
-                    station={setStationState}
-                    select={check === c.id ? true : false}
-                    id={c.id}
-                    rate={c.rate}
-                    busRouteID={c.busRouteID.id}
-                    timeStart={
-                      c.time.split(":")[0] + "h:" + c.time.split(":")[1]
-                    }
-                    timeEnd={
-                      parseInt(c.time.split(":")[0]) +
-                      6 +
-                      "h:" +
-                      c.time.split(":")[1]
-                    }
-                    price={c.busRouteID.price}
-                    busType={c.busRouteID.busID.typeBusID.name}
-                    busTypeId={c.busRouteID.busID.typeBusID.id}
-                    seat={c.seat}
-                    stationFrom={c.busRouteID.routeID.city_from.name}
-                    stationTo={c.busRouteID.routeID.to_garage.name}
-                    date={c.date}
-                  ></Item>
-                );
-              })
-            ) : (
-              <h1 style={{ textAlign: "center", margin: "0", padding: "10px" }}>
-                 No rides!!!
-              </h1>
-            )}
-          </div>
-        ) : step === 2 ? (
-          <Booking1
-            step={setStepState}
-            clearSeat={clearSeatSubmit}
-            userInfo={setUserInfoState}
-          ></Booking1>
-        ) : step === 3 ? (
-          <Booking2
-            step={setStepState}
-            placeFrom={placeFrom}
-            userInfo={userInfo}
-            seat={seat}
-            total={total}
-            station={station}
-            timeTableID={timeTableID}
-          ></Booking2>
-        ) : (
-          ""
-        )}
-      </div>
-    </div>
-    <div className="col-lg-4 col-md-12 col-sm-12 sidebar-side">
+                    clearSeat={clearSeatSubmit}
+                    userInfo={setUserInfoState}
+                  ></Booking1>
+                ) : step === 3 ? (
+                  <Booking2
+                    step={setStepState}
+                    placeFrom={placeFrom}
+                    userInfo={userInfo}
+                    seat={seat}
+                    total={total}
+                    station={station}
+                    timeTableID={timeTableID}
+                  ></Booking2>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+            <div className="col-lg-4 col-md-12 col-sm-12 sidebar-side">
               <div className="default-sidebar tour-sidebar ml-20">
                 <div className="sidebar-widget downloads-widget">
                   <div className="form-widget">
@@ -380,13 +382,13 @@ function Router() {
                     <ul className="download-links clearfix">
                       <li>
                         <Link to="/">
-                        Guide
+                          Guide
                           <i className="fas fa-download"></i>
                         </Link>
                       </li>
                       <li>
                         <Link to="/">
-                        Trip documents
+                          Trip documents
                           <i className="fas fa-download"></i>
                         </Link>
                       </li>
@@ -406,9 +408,9 @@ function Router() {
                   >
                     <div className="text">
                       <h2>
-                      Reduce <br />
-                      25% for <br />
-                      Dalat trips
+                        Reduce <br />
+                        25% for <br />
+                        Dalat trips
                       </h2>
                     </div>
                   </div>

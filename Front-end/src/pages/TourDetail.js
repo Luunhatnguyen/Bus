@@ -11,12 +11,24 @@ import advice1 from "../assets/img/14926f75f7d51ac044ccc0847cfb262f.png";
 import PreLoader from "../components/PreLoader";
 import MessageSnackbar from "../components/MessageSnackbar";
 import Header from "../components/Header";
-import Item from "../components/ItemLam";
-import Payment from "../components/PaymentLam";
-import Info from "../components/InfoLam";
-import Booking1 from './Booking1';
-import Booking2 from './Booking2';
-
+import Item from "../components/Item";
+import Booking1 from "./Booking1";
+import Booking2 from "./Booking2";
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+  Slider,
+  Pagination,
+  Stack,
+  TextField,
+} from "@mui/material";
+import Payment from "../components/Payment";
 export default function TourDetail(props) {
   const [route, setRoute] = useState([]);
   const [services, setServices] = useState([]);
@@ -30,7 +42,7 @@ export default function TourDetail(props) {
   const { routerId } = useParams();
 
   let user = useSelector((state) => state.user.user);
-
+  const [cName, setcName] = useState("wrapper list");
   // State of message
   const [open, setOpen] = React.useState(false);
   const [msg, setMsg] = useState("");
@@ -190,7 +202,6 @@ export default function TourDetail(props) {
 
   useEffect(() => {
     let loadListRouteDetail = async () => {
-      
       let res = await API.get(endpoints["time-table"]);
       setListRouteDetail(res.data);
 
@@ -303,6 +314,7 @@ export default function TourDetail(props) {
     setSeat([]);
   };
 
+
   const element = listRouteDetail.filter(
     (c) => c.busRouteID.routeID.id == routerId
   );
@@ -339,105 +351,6 @@ export default function TourDetail(props) {
       return -1;
     }
   });
-
-  const [classStatus, setClassStatus] = useState([]);
-  const [booking, setBooking] = useState([]);
-  const [seatStatusPass, setSeatStatusPass] = useState([]);
-  const [seatStatusFree, setSeatStatusFree] = useState([]);
-  const [timeTable, setTimeTable] = useState([]);
-  const [seatBooking, setSeatBooking] = useState([]);
-
-  useEffect(() => {
-    let seatStatus_pass = [];
-    let seatStatus_free = [];
-    let seatt = [];
-    let loadSeat = async () => {
-      let res = await API.get(endpoints["seats"](props.busTypeId));
-      setSeat(res.data);
-      seatt = res.data;
-    };
-
-    loadSeat();
-
-    let loadBookings = async () => {
-      let res = await API.get(endpoints["bookings"](props.busTypeId));
-      setBooking(res.data);
-
-      let seatBookingDetails = await API.get(
-        endpoints["seat-booking-detail"](props.id)
-      );
-      setSeatBooking(seatBookingDetails.data);
-
-      seatt.map((s) => {
-        seatBookingDetails.data.map((b) => {
-          if (b.seatID == s.id) {
-            seatStatus_pass.push(s.id);
-          }
-        });
-
-        if (!seatStatus_pass.includes(s.id)) {
-          seatStatus_free.push(s.id);
-        }
-      });
-
-      setSeatStatusPass(seatStatus_pass);
-      setSeatStatusFree(seatStatus_free);
-    };
-
-    loadBookings();
-
-    let loadTimeTable = async () => {
-      let res = await API.get(endpoints["timetable-detail"](props.id));
-      setTimeTable(res.data);
-    };
-
-    loadTimeTable();
-  }, [props.busTypeId]);
-
-  const setCountByStatus = classStatus.length;
-
-  const setTotalByStatus = classStatus.length * props.price;
-
-  const setStatuss = () => {
-    let seatStatus_pass = [];
-    let seatStatus_free = [];
-    seat.map((s) => {
-      seatBooking.map((b) => {
-        if (b.seatID == s.id) {
-          seatStatus_pass.push(s.id);
-        }
-      });
-
-      if (!seatStatus_pass.includes(s.id)) {
-        seatStatus_free.push(s.id);
-      }
-    });
-
-    setSeatStatusPass(seatStatus_pass);
-    setSeatStatusFree(seatStatus_free);
-  };
-
-  const setStatus = (id) => {
-    var array = [...classStatus];
-    var index = array.indexOf(id);
-    if (index !== -1) {
-      array.splice(index, 1);
-      setClassStatus(array);
-    } else {
-      const data = [...classStatus, id];
-      setClassStatus(data);
-    }
-  };
-
-  const formatPrice = (price) => {
-    var str = price.toString();
-    return str
-      .split("")
-      .reverse()
-      .reduce((prev, next, index) => {
-        return (index % 3 ? next : next + ",") + prev;
-      });
-  };
 
   return (
     <>
@@ -478,9 +391,101 @@ export default function TourDetail(props) {
         <div className="auto-container">
           <div className="row clearfix">
             <div className="col-lg-8 col-md-12 col-sm-12 content-side">
-              <div className="tour-details-content">
+              <div
+                className="tour-details-content"
+                style={{ padding: "20px 0px" }}
+              >
                 {step === 1 ? (
                   <div>
+                    <section
+                      className="tours-page-section"
+                      style={{ padding: "40px 0px 0px 0px" }}
+                    >
+                      <div className="auto-container">
+                        <div className="row clearfix">
+                          <div className="col-lg-12 col-md-12 col-sm-12 content-side">
+                            <div className="item-shorting clearfix">
+                              <div className="left-column pull-left">
+                                <div>
+                                  <h3>Search </h3>
+                                </div>
+                              </div>
+                              <div className="right-column pull-right clearfix">
+                                <div className="short-box clearfix">
+                                  <FormControl sx={{ m: 0, minWidth: 140 }}>
+                                    <InputLabel id="select-sort-label">
+                                      Sort by price
+                                    </InputLabel>
+                                    <Select
+                                      labelId="select-sort-label"
+                                      id="sort-select"
+                                      onChange={(e) => {
+                                        setSortType(e.target.value);
+                                      }}
+                                      autoWidth
+                                      lable="Sắp xếp theo"
+                                      inputProps={{
+                                        MenuProps: { disableScrollLock: true },
+                                      }}
+                                    >
+                                      <MenuItem value="">
+                                        <em>Sort by price</em>
+                                      </MenuItem>
+                                      <MenuItem value={"asc"}>
+                                        Prices go up
+                                      </MenuItem>
+                                      <MenuItem value={"desc"}>
+                                        Prices go down
+                                      </MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                </div>
+                                <div className="menu-box">
+                                  <FormControl sx={{ m: 0, minWidth: 140 }}>
+                                    <InputLabel id="select-sort-label">
+                                      Sort by vehicle type
+                                    </InputLabel>
+                                    <Select
+                                      labelId="select-sort-label"
+                                      id="sort-select"
+                                      onChange={(e) => {
+                                        setTypeBusState(e.target.value);
+                                      }}
+                                      autoWidth
+                                      lable="Sắp xếp theo"
+                                      inputProps={{
+                                        MenuProps: { disableScrollLock: true },
+                                      }}
+                                    >
+                                      <MenuItem value="">
+                                        <em>Sort by vehicle type</em>
+                                      </MenuItem>
+
+                                      {listTypeBus.map((c) => {
+                                        return (
+                                          <MenuItem
+                                            style={{ display: "flex" }}
+                                            value={c.id}
+                                          >
+                                            {c.name}
+                                          </MenuItem>
+                                        );
+                                      })}
+                                    </Select>
+                                  </FormControl>
+                                </div>
+                              </div>
+                            </div>
+                            <div className={cName}>{/* {routes} */}</div>
+                            <div className="pagination-wrapper">
+                              <ul className="pagination clearfix">
+                                {/* {pages} */}
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
                     {sortByType.length > 0 ? (
                       sortByType.map((c) => {
                         return (
@@ -548,37 +553,6 @@ export default function TourDetail(props) {
                 ) : (
                   ""
                 )}
-                <div className="comment-box">
-                  {/* <div className="text">
-                                        <h2>Đánh giá</h2>
-                                        <Rating name="simple-controlled"
-                                        size="large"
-                                        value={rating}
-                                        onChange={addRating}
-                                        />
-                                    </div>
-                                    <div>
-                                    <form onSubmit={addComment} className="comment-form">
-                                        <div className="row clearfix">
-                                            <div className="col-lg-12 col-md-12 col-sm-12 form-group">
-                                                <textarea placeholder="Nội dung" value={comment} 
-                                                    onChange={(event) => handleChange(event)}/>
-                                            </div>
-                                            <div className="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
-                                                <button type="submit" className="theme-btn">Gửi</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    </div>
-                                    <hr />
-                                    <div className="group-title">
-                                        <h2>{listComment.length} Bình luận</h2>
-                                    </div>
-
-                                    <div className="comment-box-content">
-                                        {listComment.map(c => <CommentItem key={c.id} comment={c} />)}
-                                    </div> */}
-                </div>
               </div>
             </div>
             <div className="col-lg-4 col-md-12 col-sm-12 sidebar-side">
@@ -586,16 +560,16 @@ export default function TourDetail(props) {
                 <div className="sidebar-widget downloads-widget">
                   <div className="form-widget">
                     <div className="widget-title">
-                      <h3>Đặt Tour</h3>
+                      <h3>Experience the trip</h3>
                     </div>
-                    <Link
-                      to={"/route-detail/" + routerId + "/booking-1"}
+                    <a
+                      href="https://www.youtube.com/watch?v=YncYl8rREqQ&ab_channel=KOYMusicGroup"
                       style={{ color: "#fff" }}
                     >
                       <button type="submit" className="theme-btn">
-                        Nhấn vào đây
+                        Click Here
                       </button>
-                    </Link>
+                    </a>
                   </div>
                   <div className="widget-title">
                     <h3>Download</h3>
@@ -604,13 +578,13 @@ export default function TourDetail(props) {
                     <ul className="download-links clearfix">
                       <li>
                         <Link to="/">
-                        Guide
+                          Guide
                           <i className="fas fa-download"></i>
                         </Link>
                       </li>
                       <li>
                         <Link to="/">
-                        Trip documents
+                          Trip documents
                           <i className="fas fa-download"></i>
                         </Link>
                       </li>
@@ -630,9 +604,9 @@ export default function TourDetail(props) {
                   >
                     <div className="text">
                       <h2>
-                      Reduce <br />
-                      25% for <br />
-                      Dalat trips
+                        Reduce <br />
+                        25% for <br />
+                        Dalat trips
                       </h2>
                     </div>
                   </div>
@@ -653,29 +627,4 @@ export default function TourDetail(props) {
     </>
   );
 }
-function CommentItem(props) {
-  return (
-    <>
-      {/* <div className="comment">
-                    <figure className="thumb-box">
-                        <Avatar
-                            alt="ImageComment"
-                            src={props.comment.user.avatar}
-                            sx={{ width: 52, height: 52 }}
-                        />
-                    </figure>
-                    <div className="comment-inner">
-                        <div className="comment-info clearfix">
-                            <span className="post-date">{props.comment.created_date}</span>
-                        </div>
-                        <p>
-                            {props.comment.content}
-                        </p>
-                        <div className="author-comment">
-                            <span>Bình luận bởi:</span> {props.comment.user.username}
-                        </div>
-                    </div>
-                </div> */}
-    </>
-  );
-}
+

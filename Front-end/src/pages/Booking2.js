@@ -17,9 +17,10 @@ import logoZaloPay from "../static/image/card/logo-zalopay.svg";
 import MessageSnackbar from "../components/MessageSnackbar";
 import NumberFormat from "react-number-format";
 import Moment from "react-moment";
+import { memo } from "react";
 
 function Booking2(props) {
-  const { routeId } = useParams();
+
   // State of message
   const [open, setOpen] = React.useState(false);
   const [msg, setMsg] = useState("");
@@ -35,15 +36,12 @@ function Booking2(props) {
     setTitleMsg(title);
     setTypeMsg(type);
   };
-
-
+  
   const [seat, setSeat] = useState(props.seat);
   const [nameSeat, setNameSeat] = useState([]);
   const [nameGara, setNameGara] = useState([]);
   const [timeTable, setTimeTable] = useState([]);
   const navigate = useNavigate();
-  const { routerId } = useParams();
-
 
   useEffect(() => {
     let loadElement = async () => {
@@ -84,54 +82,50 @@ function Booking2(props) {
   const pay = async (customerID, name, phone, timeTable, nameGara) => {
     if (window.confirm("Bạn có chắc muốn thanh toán không?") == true) {
       let booking = await API.post(endpoints["booking"], {
-        headers: "Access-Control-Allow-Origin: http://127.0.0.1:8000/route-detail/" + routerId + "/booking-3",
+        headers: "Access-Control-Allow-Origin: http://127.0.0.1:8000/",
         customerID: customerID,
         name: name,
         phone: phone,
         timeTable: timeTable,
       });
-
+  
       let res = await API.get(endpoints["last-booking"]);
-
+  
       let id = res.data.id;
-
+  
       seat.map(async (c) => {
         let bookingdetails = await API.post(endpoints["bookingdetails"], {
-          headers: "Access-Control-Allow-Origin: http://127.0.0.1:8000/route-detail/" + routerId + "/booking-3",
+          headers: "Access-Control-Allow-Origin: http://127.0.0.1:8000/",
           bookingID: id,
           from_garage: nameGara.id,
           seatID: c,
         });
       });
-
+  
       let bookinghistorys = await API.post(endpoints["booking-history"], {
-        headers: "Access-Control-Allow-Origin: http://127.0.0.1:8000/route-detail/" + routerId + "/booking-3",
+        headers: "Access-Control-Allow-Origin: http://127.0.0.1:8000/",
         bookingID: id,
         statusID: 1,
       });
       console.log(bookinghistorys);
-      if (bookinghistorys.status === 201) {
+      if(bookinghistorys.status === 201){
         alert("Bạn đã thanh toán thành công!");
-        navigate("/route-detail/" + routerId + "/booking-3");
-      } else {
+        navigate("/route-detail/booking-3");
+      }else{
         alert("Rất tiếc! Thanh toán đã thất bại");
         navigate("/");
       }
+      
     } else {
       alert("Bạn đã huỷ thanh toán!");
       navigate("/");
     }
+
   };
-
-  // End message
-
-  // if (tour.length ===  0) {
-  //     return <PreLoader />
-  // }
 
   return (
     <>
-      <section
+      {/* <section
         className="page-title centred"
         style={{ backgroundImage: `url(${pageTitle5})` }}
       >
@@ -145,7 +139,7 @@ function Booking2(props) {
             <p>Explore your next great journey</p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="booking-section booking-process-2">
         <div className="auto-container">
@@ -164,10 +158,6 @@ function Booking2(props) {
                   </li>
                 </ul>
                 <div className="inner-box">
-                  <form
-                    // onSubmit={handleSubmit}
-                    className="processing-form"
-                  >
                     <div className="row clearfix">
                       <div className="col-lg-12 col-md-12 col-sm-12 column">
                         {/* <div className="form-group">
@@ -180,51 +170,56 @@ function Booking2(props) {
                             <div className="col-lg-6 col-md-6 col-sm-12 column">
                               <div className="form-group">
                                 <label>Bus route</label>
-                                <label  class="form-control"> {props.station.stationFrom} ⇒{" "}
-                                {props.station.stationTo}
+                                <label class="form-control">
+
+                                  {props.station.stationFrom} ⇒{" "}
+                                  {props.station.stationTo}
                                 </label>
-                                                    
                               </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12 column"></div>
                             <div className="col-lg-6 col-md-6 col-sm-12 column">
                               <div className="form-group">
-                              <label>Number of seats</label>
-                                <label  class="form-control">  {props.seat.length}
+                                <label>Number of seats</label>
+                                <label class="form-control">
+                                  {" "}
+                                  {props.seat.length}
                                 </label>
                               </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12 column">
                               <div className="form-group">
-                              <label>Time</label>
-                                <label  class="form-control">
-                                {timeTable.time} ngày{" "}
-                                <Moment format="DD/MM/YYYY">{timeTable.date}</Moment>
+                                <label>Time</label>
+                                <label class="form-control">
+                                  {timeTable.time} ngày{" "}
+                                  <Moment format="DD/MM/YYYY">
+                                    {timeTable.date}
+                                  </Moment>
                                 </label>
                               </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12 column">
                               <div className="form-group">
-                              <label>Seats</label>
-                                <label  class="form-control">
-                                {nameSeat.map((c) => c.location + ", ")}
+                                <label>Seats</label>
+                                <label class="form-control">
+                                  {nameSeat.map((c) => c.location + ", ")}
                                 </label>
                               </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12 column">
                               <div className="form-group">
-                              <label>Boarding point</label>
-                                <label  class="form-control">
-                                {nameGara.name}
+                                <label>Boarding point</label>
+                                <label class="form-control">
+                                  {nameGara.name}
                                 </label>
                               </div>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-12 column">
                               <div className="form-group">
-                              <label>Total</label>
-                                <label  class="form-control">
-                                {formatPrice(props.total)}
-          <sup>₫</sup>
+                                <label>Total</label>
+                                <label class="form-control">
+                                  {formatPrice(props.total)}
+                                  <sup>₫</sup>
                                 </label>
                               </div>
                             </div>
@@ -278,33 +273,35 @@ function Booking2(props) {
                         <div className="col-lg-12 col-md-12 col-sm-12 column">
                           <div className="form-group message-btn clearfix form-next">
                             <button
-                              type="submit" className="theme-btn"
+                              type="submit"
+                              className="theme-btn"
                               onClick={() => {
                                 props.step(-1);
                               }}
                             >
-                                <i className="fas fa-angle-left" />
+                              <i className="fas fa-angle-left" />
                               Back
-                              
                             </button>
-                            <button type="submit" className="theme-btn confirm" onClick={() =>
+                            <button
+                              type="submit"
+                              className="theme-btn confirm"
+                              onClick={() =>
                                 pay(
-                                    props.userInfo.id,
-                                    props.userInfo.name,
-                                    props.userInfo.number,
-                                    props.timeTableID,
-                                    nameGara
+                                  props.userInfo.id,
+                                  props.userInfo.name,
+                                  props.userInfo.number,
+                                  props.timeTableID,
+                                  nameGara
                                 )
-                                }>
+                              }
+                            >
                               Confirm
                               <i className="fas fa-angle-right" />
                             </button>
-                            
                           </div>
                         </div>
                       </div>
                     </div>
-                  </form>
                 </div>
               </div>
             </div>

@@ -25,10 +25,8 @@ import AddArtical from '../pages/AddArtical';
 import UpdateArtical from '../pages/UpdateArtical';
 import TourDelete from '../pages/TourDelete';
 import Booking3 from '../pages/Booking3';
-import Home2 from '../components/HomeLam';
-import Router from './RouterLam';
-import RouterDetail from './RouterDetailLam';
 import Routed from '../pages/Route';
+import Payment from './Payment';
 
 export default function Body(props) {
     return (
@@ -40,11 +38,10 @@ export default function Body(props) {
                         <Route exact path="/route-list/" element={<TourList/>} />
                         <Route exact path="/routed/" element= {<Routed />} />
                         <Route exact path="/route-detail/:routerId/" element={<TourDetail/>} />
-                        <Route exact path="/articals" element={<Articals/>} />
-                        <Route exact path="/artical-details/:articalId" element={<ArticalDetails/>} />
                         <Route exact path="/route-detail/:routerId/booking-1" element={<Booking1/>} />
                         <Route exact path="/route-detail/:routerId/booking-2" element={<Booking2/>} />
-                        <Route exact path="/route-detail/:routerId/booking-3" element={<Booking3/>} />
+                        <Route exact path="/route-detail/booking-3" element={<Booking3/>} />
+                        <Route path="*" element={<Page404/>} />
                         <Route exact path="/contact" element={<Contact/>} />
                         <Route exact path="/about-us" element={<About/>} />
                         <Route exact path="/login" element={<Login/>} />
@@ -52,7 +49,8 @@ export default function Body(props) {
                         <Route exact path="/change-password" element={<ChangePassword/>} />
                         <Route exact path="/forgot-password" element={<ForgotPassword/>} />
                         <Route exact path="/reset-password/:token" element={<ResetPassword/>} />
-                        <Route path="*" element={<Page404/>} />
+                        <Route exact path="/articals" element={<Articals/>} />
+                        <Route exact path="/artical-details/:articalId" element={<ArticalDetails/>} />
                         <Route  path ='/loginAdmin' element ={<LoginAdmin />} />
                         <Route  path ='/admin' element ={<Admin />} />
                         <Route  path="/addArtical" element={<AddArtical/>} />
@@ -60,9 +58,7 @@ export default function Body(props) {
                         <Route  path="/deleteTour" element={<TourDelete/>} />
 
 
-                        <Route exact path="/Home2/" element= {<Home2 />} />
-                        <Route exact path="/Router/" element={<Router />} />
-                        <Route  exact path="/Router/:routerId/" element={<RouterDetail />} />
+                        <Route exact path="/route-detail/:routerId/booking-2" element={<Payment/>} />
                     </Routes>
                     <ScrollToTop />
                     <Footer2 />

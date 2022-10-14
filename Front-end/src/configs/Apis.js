@@ -1,4 +1,5 @@
 import axios from 'axios'
+import cookies from 'react-cookies'
 
 export let endpoints = {
     'tours': '/tours/',
@@ -55,7 +56,14 @@ export let endpoints = {
     "garages-detail": (garagesId) =>`/garages/${garagesId}`,
 
 }
-
+export const authApi = () => {
+    return axios.create({
+        baseURL: "http://127.0.0.1:8000/",
+        headers: {
+            Authorization: `Bearer ${cookies.load("access_token")}`,
+          },
+    })
+}
 export default axios.create({
     baseURL: "http://127.0.0.1:8000/"
 })

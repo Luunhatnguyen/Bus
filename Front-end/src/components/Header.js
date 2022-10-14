@@ -133,7 +133,7 @@ export default function Header(props) {
         </NavLink>
       </li>
       <li className="dropdown">
-        <NavLink activeClassName="is-current" to="/articals">
+        <NavLink activeClassName="is-current" to="/garage">
           Garage
         </NavLink>
       </li>

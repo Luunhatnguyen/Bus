@@ -1,18 +1,29 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import Api, { endpoints } from "../configs/Apis";
 // import "../static/RouteDetail.css";
-import Detail from "../components/DetailLam";
-import Comment from "../components/CommentLam";
 import { memo } from "react";
 import Moment from "react-moment";
 import cookies from "react-cookies";
 import { Link } from "react-router-dom";
-import React from "react";
 import select from "../assets/img/non_select.png";
 import select1 from "../assets/img/selected.png";
-import { display } from '@mui/system';
-
+import { display } from "@mui/system";
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+  Slider,
+  Pagination,
+  Stack,
+  TextField,
+} from "@mui/material";
+import Comment from "./Comment";
 
 function Item(props) {
   const [classStatus, setClassStatus] = useState([]);
@@ -33,6 +44,20 @@ function Item(props) {
       setPlaceFrom(place);
       props.placeFrom(place);
     }
+  };
+  const [cName, setcName] = useState("wrapper list");
+  const [cList, setcList] = useState("list-view on");
+  const [cGrid, setcGrid] = useState("grid-view");
+  const listOn = () => {
+    setcName("wrapper list");
+    setcList("list-view on");
+    setcGrid("grid-view");
+  };
+
+  const gridOn = () => {
+    setcName("wrapper grid");
+    setcList("list-view");
+    setcGrid("grid-view on");
   };
 
   useEffect(() => {
@@ -145,59 +170,57 @@ function Item(props) {
 
   return (
     <>
-      <div className="inner-box">
-        <div className="text">
-          <h2 className="describle">Describe</h2>
-          {/* <p dangerouslySetInnerHTML={{__html: `${route.description}`}} /> */}
-          <p>Wonderful Trip</p>
-          <ul className="info-list clearfix">
-            <li>
-              <i className="far fa-clock"></i> {props.timeEnd}{" "}
-            </li>
-            <li>
-              <i className="far fa-user"></i>Updating
-            </li>
-            <li>
-              <i className="far fa-map"></i>Updating
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className="overview-inner">
-        <ul className="overview-list clearfix">
+    <div className="inner-box">
+      <div className="text">
+        <h2 className="describle">Describe</h2>
+        {/* <p dangerouslySetInnerHTML={{__html: `${route.description}`}} /> */}
+        <p>Wonderful Trip</p>
+        <ul className="info-list clearfix">
           <li>
-            <span>Seat:</span>
-            {seatStatusFree.length} seat
+            <i className="far fa-clock"></i> {props.timeEnd}{" "}
           </li>
           <li>
-            <span>Departure time:</span>
-            {props.timeEnd}
+            <i className="far fa-user"></i>Updating
           </li>
           <li>
-            <span>Departure day:</span>
-            {props.date}
-          </li>
-          <li>
-            <span>Price:</span>
-            {formatPrice(props.price)}
-            <sup>₫</sup>
-          </li>
-          <li>
-            <span>Departure:</span>
-            {props.stationFrom}
-          </li>
-          <li>
-            <span>Destination:</span>
-            {props.stationTo}
+            <i className="far fa-map"></i>Updating
           </li>
         </ul>
       </div>
-  
-      <Row> 
-     
-        {props.select == false ? (
-          <Col xs={1} className="select-check"  style={ {display :"flex" } }>
-           <h2 style={{ minWidth: "406px"}}>Book tickets <span style={{ color : "#ff7c5b"}} > Click Here ->>></span> </h2>
+    </div>
+    <div className="overview-inner">
+      <ul className="overview-list clearfix">
+        <li>
+          <span>Seat:</span>
+          {seatStatusFree.length} seat
+        </li>
+        <li>
+          <span>Departure time:</span>
+          {props.timeEnd}
+        </li>
+        <li>
+          <span>Departure day:</span>
+          {props.date}
+        </li>
+        <li>
+          <span>Price:</span>
+          {formatPrice(props.price)}
+          <sup>₫</sup>
+        </li>
+        <li>
+          <span>Departure:</span>
+          {props.stationFrom}
+        </li>
+        <li>
+          <span>Destination:</span>
+          {props.stationTo}
+        </li>
+      </ul>
+    </div>
+    <Row>
+          {props.select == false ? (
+           <Col xs={1} className="select-check"  style={ {display :"flex" } }>
+           <h2 style={{ minWidth: "614px"}}>Book tickets and Comment<span style={{ color : "#ff7c5b"}} > Click Here ->>></span> </h2>
            
             <img
               src={select}
@@ -208,11 +231,11 @@ function Item(props) {
               }}
               alt="ád"
             />
-
+  
           </Col>
-        ) : (
-          <Col xs={1} className="select-check" style={ {display :"flex" } }>
-            <h2 style={{ minWidth: "180px"}}>Book tickets  </h2>
+          ) : (
+            <Col xs={1} className="select-check" style={ {display :"flex" } }>
+            <h2 style={{ minWidth: "350px"}}>Book tickets and Rating </h2>
             <img
               src={select1}
               style={{ width: "25px",height:"30px",marginLeft:"15px",marginTop:"5px" }}
@@ -224,10 +247,53 @@ function Item(props) {
             />
             <div style={{ color: "#4397e0" }}></div>
           </Col>
-        )}
-      </Row>
-      {props.select == true ? (
-            <div>
+          )}
+        </Row>
+        {props.select == true ? (
+          <Container style={{ textAlign: "center", padding: "20px" }}>
+            <Container>
+              <Row
+                style={{
+                  boxShadow: "0px 0px 10px #646464",
+                  padding: "10px",
+                  marginBottom: "10px",
+                  color:" #ff8b6e",
+                }}
+              >
+                <Col
+                  xs={6}
+                  style={{
+                    cursor: "pointer",
+                    color: `${props.choosen == 1 ? "blue" : ""}`,
+                    borderBottom: `${
+                      props.choosen == 1 ? "2px solid blue" : ""
+                    }`,
+                  }}
+                  onClick={() => {
+                    props.setChoosen(1);
+                  }}
+                >
+                  Book tickets
+                </Col> 
+                <Col
+                  xs={6}
+                  style={{
+                    cursor: "pointer",
+                    color: `${props.choosen == 3 ? "blue" : ""}`,
+                    borderBottom: `${
+                      props.choosen == 3 ? "2px solid blue" : ""
+                    }`,
+                  }}
+                  onClick={() => {
+                    props.setChoosen(3);
+                  }}
+                >
+                  Rating and Comment
+                </Col>
+              </Row>
+            </Container>
+            {props.choosen == 1 ? (
+              <div>
               {props.busTypeId == 3 ? (
                 <Row style={{ justifyContent: "center" }}>
                   <Col xs={4}>
@@ -410,16 +476,23 @@ function Item(props) {
                       Login to book bus tickets !!!
                     </Link>
                   )}
+                  
                 </div>
               ) : (
                 ""
               )}
             </div>
-      ) : (
-        ""
-      )}
-    </>
-  );
+            ) : (
+              <Comment busRouteID={props.busRouteID}></Comment>
+            )}
+          </Container>
+        ) : (
+          ""
+        )}
+
+    
+  </>
+);
 }
 
 export default memo(Item);
