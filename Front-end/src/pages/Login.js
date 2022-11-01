@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import API, { endpoints } from "../configs/Apis";
+import API, { authApi,endpoints } from "../configs/Apis";
 import cookies from "react-cookies";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -10,6 +10,14 @@ import shape16 from "../static/image/shape/shape-16.png";
 import shape17 from "../static/image/shape/shape-17.png";
 import MessageSnackbar from "../components/MessageSnackbar";
 import Header from "../components/Header";
+import FirebaseInit from "../firebase/firebase-init";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+} from "firebase/auth";
+
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -79,6 +87,34 @@ export default function Login() {
     }
   };
 
+  FirebaseInit();
+   const provider = new GoogleAuthProvider();
+   const handleGoogleSignedIn = () => {
+      const auth = getAuth();
+      console.log(auth);
+      signOut(auth);
+      signInWithPopup(auth, provider).then(async (result) => {
+         const googleAccess = await API.post(endpoints["google-access"], {
+            auth_token: result._tokenResponse.oauthIdToken,
+         });
+         console.log(googleAccess.data);
+         cookies.save("access_token", googleAccess.data.tokens.access);
+         const user = await authApi().get(endpoints["current_user"]);
+         cookies.save("current_user", user.data);
+         console.log(user.data);
+         dispatch({
+            type: "login",
+            payload: user.data,
+         });
+        //  closeModal(false);
+      });
+   };
+
+   let path = <>
+      <Link  to='/loginAdmin' variant="primary" type="submit"  className="theme-btn">
+            Đăng nhập bằng Admin
+      </Link>
+    </>
 
   return (
     <>
@@ -122,18 +158,22 @@ export default function Login() {
             <div className="form-inner">
               <h3>Login with</h3>
               <ul className="social-links clearfix">
-                <li>
-                  <Link to="/">
+                <button className="button-login">
                     <span>Login with Facebook _</span>
                     <i className="fab fa-facebook-f" />
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/">
+                </button>
+                <button
+                        className="button-login"
+                        onClick={handleGoogleSignedIn}
+                     >
+                        Log in with Google _ 
+                        <i class="fab fa-google-plus-g"></i>
+                     </button>
+                {/* <li>
                     <span>Login with  Google _</span>
-                    <i className="fab fa-google-plus-g" />
-                  </Link>
-                </li>
+                    <button className="buttonsLogin-loginOtherWay--google fab fa-google-plus-g"
+                        onClick={handleGoogleSignedIn} />
+                </li> */}
               </ul>
               <div className="text">
                 <span>Or</span>
@@ -172,6 +212,9 @@ export default function Login() {
                         Login
                       </button>
                     </div>
+                    {/* <div className="form-group message-btn"style={{marginLeft:'50px'}}>
+                                            {path}
+                                        </div> */}
                   </div>
                 </div>
               </form>

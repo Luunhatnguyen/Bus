@@ -10,7 +10,7 @@ import video1 from "../assets/img/Bus-Station-High-Quality-Wallpaper.jpg";
 import about3 from "../assets/img/banner-mockup-bus-station-stop-departing-red-blank-poster-mock-up-inside-advertising-empty-template-public-141508844.jpg";
 import { Link } from "react-router-dom";
 
-export default function About(props) {
+export default function About() {
   return (
     <>
       <Header />
@@ -41,7 +41,7 @@ export default function About(props) {
   );
 }
 
-function AboutStyleTwoSection(props) {
+function AboutStyleTwoSection() {
   const componentDidMount = () => {
     new WOW.WOW({
       live: false,

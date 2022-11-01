@@ -2,22 +2,21 @@ import axios from 'axios'
 import cookies from 'react-cookies'
 
 export let endpoints = {
-    'tours': '/tours/',
-    'tour-details': (tourId) => `/tours/${tourId}/`,
-    'add-comment-tour': (tourId) => `/tours/${tourId}/add-comment/`,
-    'tour-comments': (tourId) => `/tours/${tourId}/comments/`,
-    'update-slots': (tourId) => `/tours/${tourId}/update-slots/` ,
-    'categories': '/categories/',
-    'services': '/services/',
-    'customers': '/customers/',
-    'articals': '/articals/',
-    'artical-details': (articalId) => `/articals/${articalId}/`,
-    'like': (articalId) => `/articals/${articalId}/like/`,
-    'payers': '/payers/',
-    'get-payer': (payerId) => `/payers/${payerId}`,
-    'artical-comments': (articalId) => `/articals/${articalId}/comments/`,
-    'add-comment-artical': (articalId) => `/articals/${articalId}/add-comment/`,
-    'rating': (tourId) => `/tours/${tourId}/rating/`,
+    // 'tours': '/tours/',
+    // 'tour-details': (tourId) => `/tours/${tourId}/`,
+    // 'add-comment-tour': (tourId) => `/tours/${tourId}/add-comment/`,
+    // 'tour-comments': (tourId) => `/tours/${tourId}/comments/`,
+    // 'update-slots': (tourId) => `/tours/${tourId}/update-slots/` ,
+    // 'categories': '/categories/',
+    // 'services': '/services/',
+    // 'customers': '/customers/',
+    // 'articals': '/articals/',
+    // 'artical-details': (articalId) => `/articals/${articalId}/`,
+    // 'like': (articalId) => `/articals/${articalId}/like/`,
+    // 'payers': '/payers/',
+    // 'get-payer': (payerId) => `/payers/${payerId}`,
+    
+    // 'rating': (tourId) => `/tours/${tourId}/rating/`,
 
     'users': '/users/',
     'change-password': '/users/change-password/',
@@ -29,6 +28,10 @@ export let endpoints = {
     'oauth2-info': '/oauth2-info/',
 
     "router": "/routes/",
+    "buss": "/buss/",
+    'bus-details': (busId) => `/buss/${busId}/`,
+    'bus-comments': (busId) => `/buss/${busId}/comments/`,
+    'add-comment-bus': (busId) => `/buss/${busId}/add-comment/`,
     "time-table": "/timetables/",
     "time-table-detail": (timetableID) =>`/timetables/${timetableID}`,
     "type-bus": "/typebuss/",
@@ -54,7 +57,13 @@ export let endpoints = {
     "checked-user": (busrouteId) => `/busroutes/${busrouteId}/checked-user/`,
     "garages": "/garages/",
     "garages-detail": (garagesId) =>`/garages/${garagesId}`,
-
+    "facebook-access": "/social_auth/facebook/",
+    "google-access": "/social_auth/google/",
+    "momo": "/momo/request_momo/",
+    "return-momo": "/momo/return-momo/",
+    "booking-pending": (userID) => `/bookings/booking_pending/?userID=${userID}`,
+    "history-find-by-bookingID": (bookingID) => `/bookinghistorys/find_by_bookingID/?bookingID=${bookingID}`,
+    "bookingID": (bookingID) => `/bookings/${bookingID}`,
 }
 export const authApi = () => {
     return axios.create({

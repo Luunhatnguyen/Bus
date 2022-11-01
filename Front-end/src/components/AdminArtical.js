@@ -3,7 +3,6 @@ import { Card, CardImg, Col } from 'react-bootstrap'
 import {BiTime} from "react-icons/bi"
 import {GiMoneyStack} from "react-icons/gi"
 import { useState  } from "react";
-import { useParams} from 'react-router';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'

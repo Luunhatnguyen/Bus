@@ -293,7 +293,7 @@ function Comment(props) {
         </div>
         <span>• {comments.length} rating</span>
       </div>
-      {/* Cho nay comment nehhhhhh */}
+
       <div
         id="moduleComment"
         data-pagetype="1"
@@ -434,7 +434,7 @@ function Comment(props) {
                                     </div>
 
                                     <div className="comment-box-content">
-                                              {/* Cho nay la hien comment */}
+                                   
                                     <PaginatedItems itemsPerPage={5} />
                                     </div>
                 </div>

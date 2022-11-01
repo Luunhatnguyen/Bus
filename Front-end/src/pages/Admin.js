@@ -31,7 +31,7 @@ export default function Admin() {
 
         </>
         if (user !== null && user != undefined){ 
-          if(user.is_superuser)
+          if(user.isCarrier == true)
           {
               path = <>
                 <div className='user-img'>

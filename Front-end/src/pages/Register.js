@@ -3,7 +3,20 @@ import API, { endpoints } from '../configs/Apis';
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import WOW from 'wowjs';
-
+import {
+    Button,
+    FormControl,
+    FormControlLabel,
+    InputLabel,
+    MenuItem,
+    Radio,
+    RadioGroup,
+    Select,
+    Slider,
+    Pagination,
+    Stack,
+    TextField,
+  } from "@mui/material";
 import Header from '../components/Header';
 import pageTitle9 from "../assets/img/14926f75f7d51ac044ccc0847cfb262f.png"
 import shape16 from "../static/image/shape/shape-16.png"
@@ -19,7 +32,8 @@ export default function Register(props) {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const avatar = useRef();
-
+    
+    const [isCarrier, setIsCarrier] = useState('');
     // State of message
     const [open, setOpen] = React.useState(false);
     const [msg, setMsg] = useState('')
@@ -52,6 +66,7 @@ export default function Register(props) {
             formData.append("username", username);
             formData.append("password", password);
             formData.append("avatar", avatar.current.files[0]);
+            formData.append("isCarrier", isCarrier);
 
             try {
                 await API.post(endpoints['users'], formData, {
@@ -168,6 +183,26 @@ export default function Register(props) {
                                             <label>Avatar</label>
                                             <input type="file" id="avatar" ref={avatar} />
                                         </div>
+                                    </div>
+                                    <div >
+                                        <InputLabel id="isCarrier">
+                                            Loại tài khoảng
+                                        </InputLabel>
+                                        <Select
+                                            id="isCarrier"
+                                            onChange={(e) => {
+                                                setIsCarrier(e.target.value);
+                                            }}
+                                        >
+           
+                                            <MenuItem value={"true"}>
+                                                Nhà xe
+                                            </MenuItem>
+                                            <MenuItem value={"false"}>
+                                                Khách hàng
+                                            </MenuItem>
+                                        </Select>
+
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 column">
                                         <div className="form-group message-btn">

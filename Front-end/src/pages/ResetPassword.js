@@ -8,6 +8,7 @@ import pageTitle9 from "../static/image/background/page-title-9.jpg"
 import shape16 from "../static/image/shape/shape-16.png"
 import shape17 from "../static/image/shape/shape-17.png"
 import MessageSnackbar from '../components/MessageSnackbar';
+import Header from "../components/Header";
 
 export default function ResetPassword(props) {
     const navigate = useNavigate()
@@ -144,11 +145,12 @@ export default function ResetPassword(props) {
     
     return (
         <>
+                      <Header />
             <section className="page-title centred" style={{ backgroundImage: `url(${pageTitle9})` }}>
                 <div className="auto-container">
                 <div className="content-box wow fadeInDown animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
-                    <h1>Đặt Lại Mật Khẩu</h1>
-                    <p>Khám phá cuộc phiêu lưu tuyệt vời tiếp theo của bạn</p>
+                    <h1>Reset Password</h1>
+                    <p>Explore your next great journey</p>
                 </div>
                 </div>
             </section>
@@ -160,31 +162,31 @@ export default function ResetPassword(props) {
                 <div className="auto-container">
                     <div className="inner-box">
                         <div className="sec-title centred wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
-                            <p>Đặt Lại Mật Khẩu</p>
-                            <h2>Connect with us for Better Tour</h2>
+                            <p>Reset Password</p>
+                            <h2>Connect with us for Better Trip</h2>
                         </div>
                         <div className="form-inner">
                             <h3>Đăng nhập với</h3>
                             <ul className="social-links clearfix">
                                 <li>
                                     <Link to="/">
-                                        <span>Đăng Nhập với Facebook _</span>
+                                        <span>Login with Facebook _</span>
                                         <i className="fab fa-facebook-f" />
                                     </Link>
                                 </li>
                                 <li>
                                     <Link to="/">
-                                        <span>Đăng Nhập với Google _</span>
+                                        <span>Login with Google _</span>
                                         <i className="fab fa-google-plus-g" />
                                     </Link>
                                 </li>
                             </ul>
                             <div className="text">
-                                <span>hoặc</span>
+                                <span>Or</span>
                             </div>
                             {resetForm}
                             <div className="other-text">
-                                Đã có tài khoản? <Link to="/login">Đăng nhập</Link>
+                                Already have an account? <Link to="/login">Login</Link>
                             </div>
                         </div>
                     </div>

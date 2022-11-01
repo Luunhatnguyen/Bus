@@ -104,7 +104,7 @@ export default function Header(props) {
         </li>
         <li className="dropdown">
           <Link to="/" onClick={logout}>
-          Logout
+            Logout
           </Link>
         </li>
       </>
@@ -112,7 +112,11 @@ export default function Header(props) {
 
     infoAccount = (
       <MenuItem>
-        <Avatar alt="Avatar" src={user.avatar} sx={{ width: 32, height: 32 }} />
+        <Avatar
+          alt="Avatar"
+          src={user.avatar_path}
+          sx={{ width: 32, height: 32 }}
+        />
         {user.username}
       </MenuItem>
     );
@@ -137,6 +141,11 @@ export default function Header(props) {
           Garage
         </NavLink>
       </li>
+      {/* <li className="dropdown">
+        <NavLink activeClassName="is-current" to="/bills">
+          Bill
+        </NavLink>
+      </li> */}
       <li className="dropdown">
         <NavLink activeClassName="is-current" to="/about-us">
           Infomation
@@ -290,48 +299,6 @@ export default function Header(props) {
           </div>
         </div>
       </header>
-
-      {/* <div className="mobile-menu">
-                <div className="menu-backdrop" onClick={() => {setIsOpen(!isOpen)}}></div>
-
-                <div className="nav__mobile-close close-btn" onClick={() => {setIsOpen(!isOpen)}}>
-                    <i className="fas fa-times" />
-                </div>
-
-                <nav className="menu-box">
-                    <div className="nav-logo">
-                        <Link to="/">
-                            <img src={travellogo} alt="ImageLogo"/>
-                        </Link>
-                    </div>
-                    <div className="menu-outer">
-                        <div className="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
-                            <ul className="navigation clearfix">
-                                {menuHeader}
-                                {mobileMenuAccount}
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div className="contact-info">
-                        <h4>Thông tin liên lạc</h4>
-                        <ul>
-                            <li>371 Nguyễn Kiệm, Gò Vấp, Hồ Chí Minh</li>
-                            <li><Link to="tel:+0933603196">035444899</Link></li>
-                            <li><Link to="mailto:1951052134nguyen@ou.edu.vn">1951052134nguyen@ou.edu.vn</Link></li>
-                        </ul>
-                    </div>
-                    <div className="social-links">
-                        <ul className="clearfix">
-                            <li><Link to="/"><span className="fab fa-twitter"></span></Link></li>
-                            <li><Link to="/"><span className="fab fa-facebook-square"></span></Link></li>
-                            <li><Link to="/"><span className="fab fa-pinterest-p"></span></Link></li>
-                            <li><Link to="/"><span className="fab fa-instagram"></span></Link></li>
-                            <li><Link to="/"><span className="fab fa-youtube"></span></Link></li>
-                        </ul>
-                    </div>
-                </nav>
-            </div> */}
     </>
   );
 }

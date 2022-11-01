@@ -235,7 +235,7 @@ a {
         }
         .icon-position{
           position: fixed;
-          bottom: 40px;
+          bottom: 100px;
           right: 25px;
           z-index: 20;
         }
@@ -718,7 +718,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand, a, .td
 
 .seat-statuses{
   justify-content: space-evenly;
-  margin: 20px auto;
+  margin: 10px auto;
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -768,7 +768,6 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand, a, .td
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
-  margin-top: 20px;
   font-size: 15px;
   color: #4a4a4a;
 }
@@ -1114,4 +1113,11 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, .navbar, .brand, a, .td
   height: 50px;
   color: orange;
   cursor: pointer;
+}
+.button-login {
+  border: 1px solid orange;
+  padding: 10px;
+  background-color: #ff7c5b;
+  color: white;
+  margin: 10px;
 }

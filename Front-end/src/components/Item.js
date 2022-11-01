@@ -172,7 +172,7 @@ function Item(props) {
     <>
     <div className="inner-box">
       <div className="text">
-        <h2 className="describle">Describe</h2>
+        <h2 >Describe</h2>
         {/* <p dangerouslySetInnerHTML={{__html: `${route.description}`}} /> */}
         <p>Wonderful Trip</p>
         <ul className="info-list clearfix">
@@ -207,20 +207,20 @@ function Item(props) {
           {formatPrice(props.price)}
           <sup>₫</sup>
         </li>
-        <li>
+        {/* <li>
           <span>Departure:</span>
           {props.stationFrom}
         </li>
         <li>
           <span>Destination:</span>
           {props.stationTo}
-        </li>
+        </li> */}
       </ul>
     </div>
     <Row>
           {props.select == false ? (
            <Col xs={1} className="select-check"  style={ {display :"flex" } }>
-           <h2 style={{ minWidth: "614px"}}>Book tickets and Comment<span style={{ color : "#ff7c5b"}} > Click Here ->>></span> </h2>
+           <h2 style={{ minWidth: "614px",marginBottom: '50px'}}>Book tickets and Comment<span style={{ color : "#ff7c5b"}} > Click Here ->>></span> </h2>
            
             <img
               src={select}
@@ -376,7 +376,7 @@ function Item(props) {
               ) : (
                 <Row style={{ justifyContent: "center" }}>
                   <Col xs={12}>
-                    <h4 style={{textAlign:"center"}}>Row of seats</h4>
+                    <h4 style={{textAlign:"center",margin:"5px"}}>Row of seats</h4>
                     <Row
                       style={{ justifyContent: "center", marginTop: "10px" }}
                     >

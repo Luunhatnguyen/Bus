@@ -10,7 +10,7 @@ import pageTitle5 from "../static/image/background/page-title-5.jpg";
 import PreLoader from "../components/PreLoader";
 import MessageSnackbar from "../components/MessageSnackbar";
 import cookies from "react-cookies";
-import { Col, Container, Form, Row } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 export default function Booking1(props) {
   const [id, setId] = useState("");
@@ -54,11 +54,6 @@ export default function Booking1(props) {
     setTitleMsg(title);
     setTypeMsg(type);
   };
-  // End message
-
-  // if (tour.length === 0) {
-  //     return <PreLoader />
-  // }
 
   return (
     <>
@@ -81,7 +76,7 @@ export default function Booking1(props) {
       <section className="booking-section booking-process-1">
         <div className="auto-container">
           <div className="row clearfix">
-            <div className="col-lg-12 col-md-12 col-sm-12 content-side">
+            <div className="col-lg-12 col-md-12 col-sm-12 content-side" >
               <div className="booking-process-content mr-20">
                 <ul className="process-label clearfix">
                   <li className="current">
@@ -98,7 +93,7 @@ export default function Booking1(props) {
                   <h3>Contact Info</h3>
                   <form className="processing-form">
                     <div className="row clearfix">
-                      <div className="col-lg-6 col-md-6 col-sm-12 column">
+                      <div className="col-lg-6 col-md-6 col-sm-12 column" style={{marginTop: "-30px"}}>
                         <div className="form-group">
                           <label>First And Last Name</label>
                           <input
@@ -111,7 +106,7 @@ export default function Booking1(props) {
                         </div>
                       </div>
                       <div className="col-lg-6 col-md-6 col-sm-12 column"></div>
-                      <div className="col-lg-6 col-md-6 col-sm-12 column">
+                      <div className="col-lg-6 col-md-6 col-sm-12 column" style={{marginTop: "-30px"}}>
                         <div className="form-group">
                           <label>Phone</label>
                           <input
@@ -123,8 +118,8 @@ export default function Booking1(props) {
                           />
                         </div>
                       </div>
-                      <div className="col-lg-6 col-md-6 col-sm-12 column">
-                        <div className="form-group">
+                      <div className="col-lg-6 col-md-6 col-sm-12 column" style={{marginTop: "-30px"}}>
+                        <div className="form-group"> 
                           <label>Email</label>
                           <input
                             id="children"
@@ -142,7 +137,7 @@ export default function Booking1(props) {
             </div>
           </div>
         </div>
-        <Col xs={12} className="notes-container">
+        <div className="notes-container" style={{marginTop: '-45px'}}>
           <div>
             <p className="info-header">TERMS  &amp; NOTES</p>
             <p className="txt">
@@ -169,7 +164,7 @@ export default function Booking1(props) {
                The shuttle cannot be reached.
             </p>
           </div>
-        </Col>
+        </div>
                 <div>
                 <Form.Check
                       className="info-check"

@@ -28,7 +28,8 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import Payment from "../components/Payment";
+
+
 export default function TourDetail(props) {
   const [route, setRoute] = useState([]);
   const [services, setServices] = useState([]);
@@ -399,7 +400,7 @@ export default function TourDetail(props) {
                   <div>
                     <section
                       className="tours-page-section"
-                      style={{ padding: "40px 0px 0px 0px" }}
+                      style={{ padding: "10px 0px 0px 0px" }}
                     >
                       <div className="auto-container">
                         <div className="row clearfix">
@@ -428,9 +429,7 @@ export default function TourDetail(props) {
                                         MenuProps: { disableScrollLock: true },
                                       }}
                                     >
-                                      <MenuItem value="">
-                                        <em>Sort by price</em>
-                                      </MenuItem>
+                                      
                                       <MenuItem value={"asc"}>
                                         Prices go up
                                       </MenuItem>
@@ -457,9 +456,7 @@ export default function TourDetail(props) {
                                         MenuProps: { disableScrollLock: true },
                                       }}
                                     >
-                                      <MenuItem value="">
-                                        <em>Sort by vehicle type</em>
-                                      </MenuItem>
+                                   
 
                                       {listTypeBus.map((c) => {
                                         return (
